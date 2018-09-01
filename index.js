@@ -233,6 +233,15 @@ GlobalOffensive.prototype.deleteItem = function(item) {
 	this._send(Language.Delete, null, buffer);
 };
 
+GlobalOffensive.prototype.nameItem = function(nameTagID, itemID, customName) {
+    var buffer = new ByteBuffer(16 + Buffer.byteLength(customName) + 1);
+    buffer.writeUint64(coerceToLong(nameTagID));
+    buffer.writeUint64(coerceToLong(itemID));
+		buffer.writeUint8(0);
+    buffer.writeCString(customName);
+	 	this._send(Language.NameItem, null, buffer);
+};
+
 GlobalOffensive.prototype._handlers = {};
 
 function coerceToLong(num, signed) {
